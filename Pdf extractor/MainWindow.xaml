@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="XML Pdf-extractor" Height="600" Width="900" WindowStartupLocation="CenterScreen">
     <Grid Background="AliceBlue">
+
         <Button x:Name="InputSelect" Content="Select input" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Width="120" Height="50" FontSize="14"/>
         <TextBox x:Name="InputFile" HorizontalAlignment="Left" Height="50" Margin="190,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="668" FontSize="14" VerticalContentAlignment="Center" Padding="5px">
             <TextBox.ToolTip>
@@ -15,6 +16,12 @@
                 </TextBlock>
             </TextBox.ToolTip>
         </TextBox>
-
+        <Grid x:Name="ButtonGrid" Background="Azure" HorizontalAlignment="Left" Height="340" Margin="30,160,0,0" VerticalAlignment="Top" Width="828"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
     </Grid>
 </Window>
