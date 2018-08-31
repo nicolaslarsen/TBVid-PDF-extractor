@@ -61,9 +61,7 @@ namespace Pdf_extractor
 
             List<XmlNode> memes = GetPdfs();
 
-            foreach (XmlElement child in memes){
-                Console.WriteLine(child.Name);
-            }
+
             return ""; 
         }
     }
