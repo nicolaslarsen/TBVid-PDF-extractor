@@ -1,17 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Xml;
 
 namespace Pdf_extractor
 {
@@ -20,62 +13,97 @@ namespace Pdf_extractor
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Dictionary<string, Button> BtnDict;
         private const int BUTTON_HEIGHT = 50;
-        private const int BUTTON_WIDTH  = 120;
+        private const int BUTTON_WIDTH  = 150;
 
         public MainWindow()
         {
             InitializeComponent();
-            BtnDict = new Dictionary<string, Button>();
-            ExtractorTest.TestXml();
 
-
-            AddPdfButton("test");
-            Button test = AddPdfButton("memes");
-            AddPdfButton("third");
-            CalcButtonMargins();
-            foreach (Button btn in ButtonGrid.Children)
-            {
-                Console.WriteLine(btn.Content + ": " + btn.Margin);
-            }
-            test.Margin = new Thickness(0,0,0,-145);
-
+            ButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            ButtonGrid.RowDefinitions.Add(new RowDefinition());
         }
 
-        // Makes room for a new button and returns the margin for this button
-        private void CalcButtonMargins()
+        private List<int> CheckAndAddSpace()
         {
-            int numButtons  = ButtonGrid.Children.Count;
-
-            if (numButtons <= 1)
+            List<int> list = new List<int>();
+            for (int i = 0; i < ButtonGrid.ColumnDefinitions.Count; i++)
             {
-                return;
-            }
+                int btnPerRow = (int) ButtonGrid.Height / BUTTON_HEIGHT;
 
-            int buttonMargin = (int) ButtonGrid.Height / numButtons;
-            int marginTop = 0;
-            int marginBot = (int) (buttonMargin) - (BUTTON_HEIGHT / 2);
-            
-            foreach (Button child in ButtonGrid.Children)
-            {
-                child.Margin = new Thickness(0, marginTop, 0, marginBot);
-                marginBot -= (int) (buttonMargin * 1.5);
+                for (int j = 0; j < ButtonGrid.RowDefinitions.Count; j++)
+                {
+                    if (ButtonGrid.RowDefinitions.Count != btnPerRow)
+                    {
+                        ButtonGrid.RowDefinitions.Add(new RowDefinition());
+                        list.Add(0);
+                        list.Add(j);
+                    }
+                    else if (ButtonGrid.Children.Count < btnPerRow * i + j + 1)
+                    {
+                        list.Add(i);
+                        list.Add(j);
+                    }
+                    else if (j+1 == btnPerRow && i+1 == ButtonGrid.ColumnDefinitions.Count)
+                    { 
+                        ButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        list.Add(i+1);
+                        list.Add(0);
+                    }
+                }
             }
+            return list;
         }
 
-        private Button AddPdfButton(string name)
+        private void CreateAndOpenPdf(XmlNode pdf)
+        {
+            byte[] pdfBytes = Extractor.Base64Decode(pdf.InnerText);
+            string filename = Extractor.CreateFilename(pdf.Name);
+            File.WriteAllBytes(filename, pdfBytes);
+            Process.Start(filename);
+        }
+
+        private Button AddPdfButton(XmlNode pdf)
         {
             Button PdfButton = new Button
             {
-                Content = name,
+                Name = pdf.Name,
+                Content = pdf.Name,
                 Height = BUTTON_HEIGHT,
                 Width = BUTTON_WIDTH,
+                FontSize = 14
             };
 
+            PdfButton.Click += (s, e) => 
+            {
+                CreateAndOpenPdf(pdf);
+            };
+
+            List<int> colRow = CheckAndAddSpace();
             ButtonGrid.Children.Add(PdfButton);
+            Grid.SetColumn(PdfButton, colRow[0]);
+            Grid.SetRow(PdfButton, colRow[1]);
 
             return PdfButton;
+        }
+
+        private void InputSelect_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog opf = new OpenFileDialog
+            {
+                Filter = "XML Files (*.xml)|*.xml"
+            };
+
+            if (opf.ShowDialog() == true)
+            {
+                InputFile.Text = opf.FileName;
+                Extractor ext = new Extractor(InputFile.Text);
+                List<XmlNode> pdfs = ext.GetPdfs();
+                foreach (XmlNode pdf in pdfs)
+                {
+                    Button pdfButton = AddPdfButton(pdf);
+                }
+            }
         }
     }
 }

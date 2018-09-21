@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace Pdf_extractor
 {
@@ -16,19 +14,19 @@ namespace Pdf_extractor
 
         public static string Base64Encode(string plainText) {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-            return System.Convert.ToBase64String(plainTextBytes);
+            return Encoding.UTF8.GetString(plainTextBytes);
         }
 
-        public static string Base64Decode(string base64EncodedData) {
-            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
-            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        public static byte[] Base64Decode(string base64EncodedData) {
+            return System.Convert.FromBase64String(base64EncodedData);
         } 
 
         private void InsertPdfNames()
         {
             PdfNames = new List<string> {
                 "BBR_MEDDELELSE",
-                "VURDERINGS_PRINT"
+                "VURDERINGS_PRINT",
+                "EJSKAT_PRINT2"
             };
         }
 
@@ -61,8 +59,13 @@ namespace Pdf_extractor
 
             List<XmlNode> memes = GetPdfs();
 
+            return "Not implemented"; 
+        }
 
-            return ""; 
+        public static string CreateFilename(string name)
+        {
+            long TS = DateTime.Now.Ticks;
+            return name + "_" + TS + ".pdf";
         }
     }
 }
