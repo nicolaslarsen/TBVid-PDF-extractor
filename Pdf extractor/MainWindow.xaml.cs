@@ -19,7 +19,7 @@ namespace Pdf_extractor
         public MainWindow()
         {
             InitializeComponent();
-
+            
             ButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
             ButtonGrid.RowDefinitions.Add(new RowDefinition());
         }
@@ -98,10 +98,24 @@ namespace Pdf_extractor
             {
                 InputFile.Text = opf.FileName;
                 Extractor ext = new Extractor(InputFile.Text);
-                List<XmlNode> pdfs = ext.GetPdfs();
-                foreach (XmlNode pdf in pdfs)
+                ButtonGrid.Children.Clear();
+                
+                if (ext.HasPdfNames())
                 {
-                    Button pdfButton = AddPdfButton(pdf);
+                    List<XmlNode> pdfs = ext.GetPdfs();
+
+                    if (pdfs.Count < 1)
+                    {
+                        MessageBox.Show("No PDF's found for this file, " +
+                                        "perhaps the XML tag needs to be added to the config file",
+                                        "No PDF found",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Warning);
+                    }
+                    foreach (XmlNode pdf in pdfs)
+                    {
+                        Button pdfButton = AddPdfButton(pdf);
+                    }
                 }
             }
         }

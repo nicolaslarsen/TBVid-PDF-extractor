@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Xml;
 
 namespace Pdf_extractor
@@ -10,7 +12,7 @@ namespace Pdf_extractor
     {
         private XmlDocument doc;
         private string filename;
-        private List<string> PdfNames;
+        private string[] PdfNames;
 
         public static string Base64Encode(string plainText) {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
@@ -23,11 +25,28 @@ namespace Pdf_extractor
 
         private void InsertPdfNames()
         {
-            PdfNames = new List<string> {
-                "BBR_MEDDELELSE",
-                "VURDERINGS_PRINT",
-                "EJSKAT_PRINT2"
-            };
+            PdfNames = File.ReadAllLines("config.cfg");
+            for (int i = 0; i < PdfNames.Length; i++)
+            {
+                PdfNames[i] = PdfNames[i].Trim();
+            }
+        }
+
+        public bool HasPdfNames()
+        {
+            try
+            {
+                InsertPdfNames();
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Could not find a config.cfg file in the directory, make sure it exists",
+                                "No config file found",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+                return false;
+            }
+            return true;
         }
 
         public Extractor(string filename)
@@ -35,7 +54,6 @@ namespace Pdf_extractor
             this.filename = filename ?? throw new ArgumentNullException(nameof(filename));
             doc = new XmlDocument();
             doc.Load(filename);
-            InsertPdfNames();
         }
 
         public List<XmlNode> GetPdfs()

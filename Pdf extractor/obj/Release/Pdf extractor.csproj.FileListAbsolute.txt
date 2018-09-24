@@ -12,3 +12,4 @@ C:\Users\nr\Documents\TBVid PDF-extractor\Pdf extractor\obj\Release\Pdf extracto
 C:\Users\nr\Documents\TBVid PDF-extractor\Pdf extractor\obj\Release\Pdf extractor.csproj.CoreCompileInputs.cache
 C:\Users\nr\Documents\TBVid PDF-extractor\Pdf extractor\obj\Release\Pdf extractor.exe
 C:\Users\nr\Documents\TBVid PDF-extractor\Pdf extractor\obj\Release\Pdf extractor.pdb
+C:\Users\nr\Documents\TBVid PDF-extractor\Pdf extractor\obj\Release\Pdf extractor.csprojResolveAssemblyReference.cache
