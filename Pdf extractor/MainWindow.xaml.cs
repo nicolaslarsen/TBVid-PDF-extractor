@@ -97,7 +97,19 @@ namespace Pdf_extractor
             if (opf.ShowDialog() == true)
             {
                 InputFile.Text = opf.FileName;
-                Extractor ext = new Extractor(InputFile.Text);
+                Extractor ext;
+                try
+                {
+                    ext = new Extractor(InputFile.Text);
+                }
+                catch (XmlException)
+                {
+                    MessageBox.Show("Selected file is not an XML file",
+                                    "Not XML file",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                    return;
+                }
                 ButtonGrid.Children.Clear();
                 
                 if (ext.HasPdfNames())
