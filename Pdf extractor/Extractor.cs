@@ -14,7 +14,7 @@ namespace Pdf_extractor
         private XmlDocument doc;
         private string filename;
         private string[] PdfNames;
-
+        private static string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         public static string Base64Encode(string plainText) {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return Encoding.UTF8.GetString(plainTextBytes);
@@ -26,7 +26,6 @@ namespace Pdf_extractor
 
         private void InsertPdfNames()
         {
-            string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             PdfNames = File.ReadAllLines(path + "/config.cfg");
             for (int i = 0; i < PdfNames.Length; i++)
             {
@@ -85,7 +84,7 @@ namespace Pdf_extractor
         public static string CreateFilename(string name)
         {
             long TS = DateTime.Now.Ticks;
-            return name + "_" + TS + ".pdf";
+            return path + "/" + name + "_" + TS + ".pdf";
         }
     }
 }
