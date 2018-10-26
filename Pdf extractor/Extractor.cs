@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Xml;
@@ -25,7 +26,8 @@ namespace Pdf_extractor
 
         private void InsertPdfNames()
         {
-            PdfNames = File.ReadAllLines("config.cfg");
+            string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            PdfNames = File.ReadAllLines(path + "/config.cfg");
             for (int i = 0; i < PdfNames.Length; i++)
             {
                 PdfNames[i] = PdfNames[i].Trim();
