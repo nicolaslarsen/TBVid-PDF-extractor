@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -16,6 +17,8 @@ namespace Pdf_extractor
     {
         private const int BUTTON_HEIGHT = 50;
         private const int BUTTON_WIDTH  = 150;
+        // Processes aren't actually used right now
+        private Dictionary<string, Process> CreatedPdfs;
 
         public MainWindow()
         {
@@ -23,6 +26,7 @@ namespace Pdf_extractor
             
             ButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
             ButtonGrid.RowDefinitions.Add(new RowDefinition());
+            CreatedPdfs = new Dictionary<string, Process>();
         }
 
         private List<int> CheckAndAddSpace()
@@ -61,8 +65,11 @@ namespace Pdf_extractor
             byte[] pdfBytes = Extractor.Base64Decode(pdf.InnerText);
             string filename = Extractor.CreateFilename(pdf.Name);
             File.WriteAllBytes(filename, pdfBytes);
-            Process.Start(filename);
+
+            Process proc = Process.Start(filename);
+            CreatedPdfs.Add(filename, proc);
         }
+
 
         private Button AddPdfButton(XmlNode pdf)
         {
@@ -128,6 +135,38 @@ namespace Pdf_extractor
                     foreach (XmlNode pdf in pdfs)
                     {
                         Button pdfButton = AddPdfButton(pdf);
+                    }
+                }
+            }
+        }
+
+        private void Close(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = false;
+            foreach (KeyValuePair<string, Process> entry in CreatedPdfs)
+            {
+                string filename = entry.Key;
+                Process proc = entry.Value;
+
+                if (File.Exists(filename))
+                {
+                    try
+                    {
+                        File.Delete(filename);
+                    }
+                    catch (IOException)
+                    {
+                        MessageBoxResult msgResult = MessageBox.Show(
+                                    "It looks like you still have a pdf open.\n" +
+                                    "The program can not exit until you close it:\n\n" +
+                                    filename + "\n\n" +
+                                    "if you want to keep this pdf, you should " +
+                                    "save the file in another location\n\n",
+                                    "Could not clean up",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Warning);
+                        e.Cancel = true;
+                        break;
                     }
                 }
             }

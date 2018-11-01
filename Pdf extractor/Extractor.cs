@@ -15,6 +15,7 @@ namespace Pdf_extractor
         private string filename;
         private string[] PdfNames;
         private static string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
         public static string Base64Encode(string plainText) {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return Encoding.UTF8.GetString(plainTextBytes);

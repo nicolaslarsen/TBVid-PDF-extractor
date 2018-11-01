@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pdf_extractor"
         mc:Ignorable="d"
-        Title="XML Pdf-extractor" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+        Title="XML Pdf-extractor" Height="600" Width="900" WindowStartupLocation="CenterScreen"
+        Closing="Close">
+
     <Grid x:Name="MainGrid" Background="AliceBlue">
 
         <Button x:Name="InputSelect" Content="Select input" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Width="120" Height="50" FontSize="14" Click="InputSelect_Click"/>
