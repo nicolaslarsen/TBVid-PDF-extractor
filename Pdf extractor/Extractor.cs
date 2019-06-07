@@ -55,7 +55,8 @@ namespace Pdf_extractor
         {
             this.filename = filename ?? throw new ArgumentNullException(nameof(filename));
             doc = new XmlDocument();
-            doc.Load(filename);
+            var xmlString = File.ReadAllText(filename);
+            doc.LoadXml(xmlString);
         }
 
         public List<XmlNode> GetPdfs()

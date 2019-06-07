@@ -13,3 +13,18 @@ C:\Users\nr\Documents\TBVid PDF-extractor\Pdf extractor\obj\Debug\Pdf extractor.
 C:\Users\nr\Documents\TBVid PDF-extractor\Pdf extractor\obj\Debug\Pdf extractor.csproj.CoreCompileInputs.cache
 C:\Users\nr\Documents\TBVid PDF-extractor\Pdf extractor\obj\Debug\Pdf extractor.exe
 C:\Users\nr\Documents\TBVid PDF-extractor\Pdf extractor\obj\Debug\Pdf extractor.pdb
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\bin\Debug\Pdf extractor.exe.config
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\bin\Debug\Pdf extractor.exe
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\bin\Debug\Pdf extractor.pdb
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\Pdf extractor.csprojAssemblyReference.cache
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\MainWindow.g.cs
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\App.g.cs
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\Pdf extractor_MarkupCompile.cache
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\Pdf extractor_MarkupCompile.lref
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\MainWindow.baml
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\Pdf extractor.g.resources
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\Pdf_extractor.Properties.Resources.resources
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\Pdf extractor.csproj.GenerateResource.cache
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\Pdf extractor.csproj.CoreCompileInputs.cache
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\Pdf extractor.exe
+C:\Users\nr\Documents\TBVid PDF extractor\Pdf extractor\obj\Debug\Pdf extractor.pdb
